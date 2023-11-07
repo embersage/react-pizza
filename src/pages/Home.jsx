@@ -1,20 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PizzaBlock from '../components/PizzaBlock';
 import Placeholder from '../components/PizzaBlock/Placeholder';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
+import { SearchContext } from '../App';
 
 function Home() {
+  const category = useSelector((state) => state.category.value);
+  const sort = useSelector((state) => state.sort.value);
+  const { search } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const placeholders = [...new Array(10)];
+  const sorts = ['rating', 'price', 'title'];
 
   useEffect(() => {
-    fetch('https://6548b571dd8ebcd4ab236f45.mockapi.io/items')
+    setLoading(true);
+    fetch(
+      `https://6548b571dd8ebcd4ab236f45.mockapi.io/items?category=${
+        category > 0 ? category : ''
+      }&sortBy=${sorts[sort]}&order=asc&title=${search ? search : ''}`
+    )
       .then((response) => response.json())
       .then((json) => setPizzas(json))
       .finally(() => setLoading(false));
-  }, []);
+  }, [category, sort, search]);
 
   return (
     <>
@@ -26,7 +36,7 @@ function Home() {
       <div className="content__items">
         {!loading
           ? pizzas.map((item) => <PizzaBlock key={item.id} {...item} />)
-          : placeholders.map((_, index) => <Placeholder key={index} />)}
+          : [...new Array(10)].map((_, index) => <Placeholder key={index} />)}
       </div>
     </>
   );

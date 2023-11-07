@@ -1,14 +1,12 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/sortSlice';
 
 function Sort() {
   const variants = ['популярности', 'цене', 'алфавиту'];
   const [visible, setVisible] = useState(false);
-  const [index, setIndex] = useState(0);
-  const selectSort = (i) => {
-    setIndex(i);
-    setVisible(false);
-  };
-
+  const sort = useSelector((state) => state.sort.value);
+  const dispatch = useDispatch();
   return (
     <div className="sort">
       <div className="sort__label">
@@ -25,7 +23,7 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible(!visible)}>{variants[index]}</span>
+        <span onClick={() => setVisible(!visible)}>{variants[sort]}</span>
       </div>
       {visible && (
         <div className="sort__popup">
@@ -33,8 +31,11 @@ function Sort() {
             {variants.map((item, i) => (
               <li
                 key={i}
-                className={index === i ? 'active' : ''}
-                onClick={() => selectSort(i)}
+                onClick={() => {
+                  dispatch(setSort(i));
+                  setVisible(false);
+                }}
+                className={sort === i ? 'active' : ''}
               >
                 {item}
               </li>

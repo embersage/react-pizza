@@ -1,0 +1,11 @@
+@import '../../scss/variables';
+.input {
+  padding: 12px 24px;
+  border-radius: 15px;
+  border: 1px solid #c0c0c0;
+  font-size: 16px;
+  transition: border 0.2s ease-in;
+  &:focus {
+    border: 1px solid $orange;
+  }
+}
