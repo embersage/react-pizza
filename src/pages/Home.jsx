@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { SearchContext } from '../App';
 import PizzaBlock from '../components/PizzaBlock';
 import Placeholder from '../components/PizzaBlock/Placeholder';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
-import { SearchContext } from '../App';
 
 function Home() {
-  const category = useSelector((state) => state.category.value);
-  const sort = useSelector((state) => state.sort.value);
+  const category = useSelector((state) => state.filter.category);
+  const sort = useSelector((state) => state.filter.sort);
   const { search } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,14 +17,16 @@ function Home() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://6548b571dd8ebcd4ab236f45.mockapi.io/items?category=${
-        category > 0 ? category : ''
-      }&sortBy=${sorts[sort]}&order=asc&title=${search ? search : ''}`
-    )
-      .then((response) => response.json())
-      .then((json) => setPizzas(json))
-      .finally(() => setLoading(false));
+    axios
+      .get(
+        `https://6548b571dd8ebcd4ab236f45.mockapi.io/items?category=${
+          category > 0 ? category : ''
+        }&sortBy=${sorts[sort]}&order=asc&title=${search ? search : ''}`
+      )
+      .then((response) => {
+        setPizzas(response.data);
+        setLoading(false);
+      });
   }, [category, sort, search]);
 
   return (

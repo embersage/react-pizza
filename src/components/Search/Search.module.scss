@@ -1,11 +1,48 @@
 @import '../../scss/variables';
+
+@keyframes rotateButton {
+  0% {
+    transform: rotate(45deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
 .input {
-  padding: 12px 24px;
-  border-radius: 15px;
-  border: 1px solid #c0c0c0;
-  font-size: 16px;
-  transition: border 0.2s ease-in;
-  &:focus {
-    border: 1px solid $orange;
+  position: relative;
+  input {
+    width: 300px;
+    padding: 12px 24px;
+    border-radius: 15px;
+    border: 1px solid #c0c0c0;
+    font-size: 16px;
+    transition: border 0.2s ease-in;
+    &:focus {
+      border: 1px solid $orange;
+    }
+  }
+  button {
+    position: absolute;
+    top: 13%;
+    left: 85%;
+    padding: 10px;
+    display: flex;
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      svg {
+        fill: #949494;
+      }
+      cursor: pointer;
+    }
+    &:active {
+      background-color: #e6e6e6;
+      border-radius: 50%;
+    }
+    animation: rotateButton 0.5s ease-in-out 1;
   }
 }

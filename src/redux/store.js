@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import categoriesReducer from './categoriesSlice';
-import sortReducer from './sortSlice';
+import filterReducer from './slices/filterSlice';
+import cartReducer from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
-    category: categoriesReducer,
-    sort: sortReducer,
+    filter: filterReducer,
+    cart: cartReducer,
   },
 });

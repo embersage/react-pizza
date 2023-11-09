@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSort } from '../redux/sortSlice';
+import { setSort } from '../redux/slices/filterSlice';
 
 function Sort() {
   const variants = ['популярности', 'цене', 'алфавиту'];
   const [visible, setVisible] = useState(false);
-  const sort = useSelector((state) => state.sort.value);
+  const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
   return (
     <div className="sort">
