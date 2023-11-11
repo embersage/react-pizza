@@ -13,7 +13,7 @@ function PizzaBlock(props) {
     id,
     imageUrl,
     title,
-    doughType,
+    doughType: doughTypes[doughType],
     size,
     price,
     count: 1,

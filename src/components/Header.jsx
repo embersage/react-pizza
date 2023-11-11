@@ -4,7 +4,9 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 
 function Header() {
-  const items = useSelector((state) => state.cart.items);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const totalCount = useSelector((state) => state.cart.totalCount);
+
   return (
     <div className="header">
       <div className="container">
@@ -20,12 +22,7 @@ function Header() {
         <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>
-              {items.reduce((sum, item) => {
-                return sum + item.price * item.count;
-              }, 0)}
-              ₽
-            </span>
+            <span>{totalPrice}₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -56,11 +53,7 @@ function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>
-              {items.reduce((sum, item) => {
-                return sum + item.count;
-              }, 0)}
-            </span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

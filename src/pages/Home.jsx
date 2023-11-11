@@ -1,22 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { SearchContext } from '../App';
 import PizzaBlock from '../components/PizzaBlock';
 import Placeholder from '../components/PizzaBlock/Placeholder';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
+import { setItems } from '../redux/slices/pizzasSlice';
 
 function Home() {
-  const category = useSelector((state) => state.filter.category);
   const sort = useSelector((state) => state.filter.sort);
+  const category = useSelector((state) => state.filter.category);
+  const pizzas = useSelector((state) => state.pizzas.items);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const { search } = useContext(SearchContext);
-  const [pizzas, setPizzas] = useState([]);
-  const [loading, setLoading] = useState(true);
   const sorts = ['rating', 'price', 'title'];
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
+
     axios
       .get(
         `https://6548b571dd8ebcd4ab236f45.mockapi.io/items?category=${
@@ -24,8 +27,8 @@ function Home() {
         }&sortBy=${sorts[sort]}&order=asc&title=${search ? search : ''}`
       )
       .then((response) => {
-        setPizzas(response.data);
-        setLoading(false);
+        dispatch(setItems(response.data));
+        setIsLoading(false);
       });
   }, [category, sort, search]);
 
@@ -37,7 +40,7 @@ function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {!loading
+        {!isLoading
           ? pizzas.map((item) => <PizzaBlock key={item.id} {...item} />)
           : [...new Array(10)].map((_, index) => <Placeholder key={index} />)}
       </div>

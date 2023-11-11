@@ -3,16 +3,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
 function Sort() {
-  const variants = ['популярности', 'цене', 'алфавиту'];
-  const [visible, setVisible] = useState(false);
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
+  const [isVisible, setIsVisible] = useState(false);
   const sortRef = useRef();
+  const variants = ['популярности', 'цене', 'алфавиту'];
 
   useEffect(() => {
-    document.body.addEventListener('click', (event) => {
-      console.log(event);
-    });
+    const clickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener('click', clickOutside);
+
+    return () => {
+      document.body.removeEventListener('click', clickOutside);
+    };
   }, []);
 
   return (
@@ -31,9 +39,9 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible(!visible)}>{variants[sort]}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{variants[sort]}</span>
       </div>
-      {visible && (
+      {isVisible && (
         <div className="sort__popup">
           <ul>
             {variants.map((item, i) => (
@@ -41,7 +49,7 @@ function Sort() {
                 key={i}
                 onClick={() => {
                   dispatch(setSort(i));
-                  setVisible(false);
+                  setIsVisible(false);
                 }}
                 className={sort === i ? 'active' : ''}
               >
