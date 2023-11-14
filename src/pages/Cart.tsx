@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import emptyCart from '../assets/img/empty-cart.png';
 import CartBlock from '../components/CartBlock';
+import { selectCart } from '../redux/slices/cartSlice';
+import { FC } from 'react';
 
-function Cart() {
-  const cart = useSelector((state) => state.cart.items);
+const Cart: FC = () => {
+  const cart = useSelector(selectCart);
 
   if (cart.length === 0) {
     return (
@@ -27,5 +29,5 @@ function Cart() {
     );
   }
   return <CartBlock />;
-}
+};
 export default Cart;

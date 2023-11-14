@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import styles from './NotFound.module.scss';
+import { FC } from 'react';
 
-function NotFoundBlock() {
+const NotFoundBlock: FC = () => {
   return (
     <div className={styles.root}>
       <h1 className={styles.title}>Страница не найдена :(</h1>
@@ -10,6 +11,6 @@ function NotFoundBlock() {
       </Link>
     </div>
   );
-}
+};
 
 export default NotFoundBlock;

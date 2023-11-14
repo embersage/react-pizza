@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
-function Sort() {
+const Sort: FC = () => {
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
   const variants = ['популярности', 'цене', 'алфавиту'];
 
   useEffect(() => {
@@ -61,6 +61,6 @@ function Sort() {
       )}
     </div>
   );
-}
+};
 
 export default Sort;

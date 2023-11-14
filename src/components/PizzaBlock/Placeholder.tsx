@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
-function Placeholder() {
+const Placeholder: FC = () => {
   return (
     <ContentLoader
       className="pizza-block"
@@ -19,6 +19,6 @@ function Placeholder() {
       <rect x="130" y="420" rx="25" ry="25" width="147" height="45" />
     </ContentLoader>
   );
-}
+};
 
 export default Placeholder;
