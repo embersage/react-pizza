@@ -1,14 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  clearItems,
-  appendItem,
-  removeItem,
-  removeType,
-  selectCart,
-} from '../../redux/slices/cartSlice';
-import styles from './CartBlock.module.scss';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearItems, selectCart } from '../../redux/slices/cartSlice';
+import styles from './CartBlock.module.scss';
+
 import CartItem from '../CartItem';
 
 const CartBlock: FC = () => {
@@ -96,19 +91,7 @@ const CartBlock: FC = () => {
       </div>
       <div className={styles.contentItems}>
         {cart.map((item) => {
-          return (
-            <CartItem
-              item={item}
-              //id={item.id}
-              //imageUrl={item.imageUrl}
-              //title={item.title}
-              //doughType={item.doughType}
-              sizes={sizes}
-              //size={item.size}
-              //price={item.price}
-              //count={item.count}
-            />
-          );
+          return <CartItem item={item} sizes={sizes} />;
         })}
       </div>
       <div className={styles.cart__bottom}>
@@ -117,7 +100,7 @@ const CartBlock: FC = () => {
             {' '}
             Всего пицц:{' '}
             <b>
-              {cart.reduce((count, item) => {
+              {cart.reduce((count: number, item) => {
                 return (count += item.count);
               }, 0)}{' '}
               шт.
@@ -127,7 +110,7 @@ const CartBlock: FC = () => {
             {' '}
             Сумма заказа:{' '}
             <b>
-              {cart.reduce((sum, item) => {
+              {cart.reduce((sum: number, item) => {
                 return (sum += item.count * item.price);
               }, 0)}{' '}
               ₽

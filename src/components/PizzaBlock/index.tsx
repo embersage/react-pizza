@@ -84,7 +84,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
           </svg>
           <span>Добавить</span>
           <i>
-            {cart.reduce((count, item) => {
+            {cart.reduce((count: number, item) => {
               if (item.id === pizza.id) {
                 count += item.count;
               }

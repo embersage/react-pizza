@@ -10,7 +10,7 @@ const Sort: FC = () => {
   const variants = ['популярности', 'цене', 'алфавиту'];
 
   useEffect(() => {
-    const clickOutside = (event) => {
+    const clickOutside = (event: MouseEvent) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setIsVisible(false);
       }

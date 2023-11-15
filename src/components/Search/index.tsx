@@ -5,7 +5,7 @@ import { setSearch } from '../../redux/slices/filterSlice';
 import styles from './Search.module.scss';
 
 function Search() {
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [str, setStr] = useState('');
 
@@ -33,7 +33,7 @@ function Search() {
           onClick={() => {
             dispatch(setSearch(''));
             setStr('');
-            inputRef.current.focus();
+            if (inputRef.current) inputRef.current.focus();
           }}
         >
           <svg fill="#6b6b6b" width="15px" height="15px">
